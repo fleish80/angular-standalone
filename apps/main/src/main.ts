@@ -6,7 +6,8 @@ import {NoPreloading, provideRouter, Routes, withDebugTracing, withPreloading} f
 import {HttpClientModule} from '@angular/common/http';
 
 const routes: Routes = [
-  {path: 'user', loadComponent: () => import('./app/user.component').then(m => m.UserComponent)}
+  {path: 'user', loadComponent: () => import('./app/user.component').then(m => m.UserComponent)},
+  {path: 'image', loadComponent: () => import('./app/image.component').then(m => m.ImageComponent)}
 ];
 
 

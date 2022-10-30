@@ -12,6 +12,7 @@ import {MatButtonModule} from '@angular/material/button';
 
     <nav class="nav">
       <a routerLink="/user" mat-button>User</a>
+      <a routerLink="/image" mat-button>Image</a>
     </nav>
 
     <main class="mat-app-background mat-elevation-z2 content">
