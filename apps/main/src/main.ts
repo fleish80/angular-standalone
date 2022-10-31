@@ -1,14 +1,25 @@
-import {enableProdMode, importProvidersFrom} from '@angular/core';
+import {enableProdMode, importProvidersFrom, inject} from '@angular/core';
 import {environment} from './environments/environment';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {AppComponent} from './app/app.component';
 import {NoPreloading, provideRouter, Routes, TitleStrategy, withDebugTracing, withPreloading} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {TemplatePageTitleStrategy} from './app/template-page.title-strategy';
+import {CanActivateTestService} from 'apps/main/src/app/can-activate-test.service';
 
 const routes: Routes = [
-  {path: 'user', loadComponent: () => import('./app/user.component').then(m => m.UserComponent), title: 'User'},
-  {path: 'image', loadComponent: () => import('./app/image.component').then(m => m.ImageComponent), title: 'Image'}
+  {
+    path: 'user',
+    loadComponent: () => import('./app/user.component').then(m => m.UserComponent),
+    title: 'User',
+    canActivate: [() => inject(CanActivateTestService).canActivate()]
+  },
+  {
+    path: 'image',
+    loadComponent: () => import('./app/image.component').then(m => m.ImageComponent),
+    title: 'Image',
+    canActivate: [() => inject(CanActivateTestService).canActivateObs()]
+  }
 ];
 
 
@@ -80,6 +91,6 @@ bootstrapApplication(AppComponent, {
        */
       // withRouterConfig({})
     ),
-    { provide: TitleStrategy, useClass: TemplatePageTitleStrategy }
+    {provide: TitleStrategy, useClass: TemplatePageTitleStrategy}
   ]
 })
