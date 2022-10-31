@@ -2,12 +2,13 @@ import {enableProdMode, importProvidersFrom} from '@angular/core';
 import {environment} from './environments/environment';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {AppComponent} from './app/app.component';
-import {NoPreloading, provideRouter, Routes, withDebugTracing, withPreloading} from '@angular/router';
+import {NoPreloading, provideRouter, Routes, TitleStrategy, withDebugTracing, withPreloading} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
+import {TemplatePageTitleStrategy} from './app/template-page.title-strategy';
 
 const routes: Routes = [
-  {path: 'user', loadComponent: () => import('./app/user.component').then(m => m.UserComponent)},
-  {path: 'image', loadComponent: () => import('./app/image.component').then(m => m.ImageComponent)}
+  {path: 'user', loadComponent: () => import('./app/user.component').then(m => m.UserComponent), title: 'User'},
+  {path: 'image', loadComponent: () => import('./app/image.component').then(m => m.ImageComponent), title: 'Image'}
 ];
 
 
@@ -78,6 +79,7 @@ bootstrapApplication(AppComponent, {
        * urlUpdateStrategy - Defines when the router updates the browser URL. By default ('deferred'), update after successful navigation. Set to 'eager' if prefer to update the URL at the beginning of navigation. Updating the URL early allows you to handle a failure of navigation by showing an error message with the URL that failed.
        */
       // withRouterConfig({})
-    )
+    ),
+    { provide: TitleStrategy, useClass: TemplatePageTitleStrategy }
   ]
 })
