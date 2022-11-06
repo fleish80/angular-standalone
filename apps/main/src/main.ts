@@ -1,11 +1,13 @@
-import {enableProdMode, importProvidersFrom, inject} from '@angular/core';
+import {enableProdMode, ENVIRONMENT_INITIALIZER, importProvidersFrom, inject} from '@angular/core';
 import {environment} from './environments/environment';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {AppComponent} from './app/app.component';
-import {NoPreloading, provideRouter, Routes, TitleStrategy, withDebugTracing, withPreloading} from '@angular/router';
+import {NoPreloading, provideRouter, Routes, TitleStrategy, withPreloading} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {TemplatePageTitleStrategy} from './app/template-page.title-strategy';
-import {CanActivateTestService} from 'apps/main/src/app/can-activate-test.service';
+import {CanActivateTestService} from './app/can-activate-test.service';
+import {switcherRouter} from './app/switcher.router';
+import {SwitcherService} from './app/switcher.service';
 
 const routes: Routes = [
   {
@@ -29,6 +31,21 @@ const routes: Routes = [
     loadComponent: () => import('./app/image.component').then(c => c.ImageComponent),
     title: 'Image',
     canActivate: [() => inject(CanActivateTestService).canActivateObs()]
+  },
+  {
+    path: 'switcher',
+    loadComponent: () => import('./app/switcher.component').then(c => c.SwitcherComponent),
+    title: 'Switcher',
+    children: switcherRouter,
+    providers: [
+      {
+        provide: ENVIRONMENT_INITIALIZER,
+        multi: true,
+        useValue() {
+          inject(SwitcherService).init();
+        },
+      },
+    ],
   },
   {
     path: '**',
@@ -59,7 +76,7 @@ bootstrapApplication(AppComponent, {
        * Enables logging of all internal navigation events to the console.
        * Extra logging might be useful for debugging purposes to inspect Router event sequence.
        */
-      withDebugTracing(),
+      // withDebugTracing(),
 
       /**
        * Disables initial navigation.
