@@ -9,16 +9,31 @@ import {CanActivateTestService} from 'apps/main/src/app/can-activate-test.servic
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'user'
+  },
+  {
     path: 'user',
-    loadComponent: () => import('./app/user.component').then(m => m.UserComponent),
+    loadComponent: () => import('./app/user.component').then(c => c.UserComponent),
     title: 'User',
-    canActivate: [() => inject(CanActivateTestService).canActivate()]
+    canMatch: [() => inject(CanActivateTestService).canActivate()]
+  },
+  {
+    path: 'user',
+    loadComponent: () => import('./app/another-user.component').then(c => c.AnotherUserComponent),
+    title: 'User',
   },
   {
     path: 'image',
-    loadComponent: () => import('./app/image.component').then(m => m.ImageComponent),
+    loadComponent: () => import('./app/image.component').then(c => c.ImageComponent),
     title: 'Image',
     canActivate: [() => inject(CanActivateTestService).canActivateObs()]
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./app/not-found.component').then(c => c.NotFoundComponent),
+    title: 'No Found'
   }
 ];
 
