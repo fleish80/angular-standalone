@@ -2,7 +2,14 @@ import {enableProdMode, ENVIRONMENT_INITIALIZER, importProvidersFrom, inject} fr
 import {environment} from './environments/environment';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {AppComponent} from './app/app.component';
-import {NoPreloading, provideRouter, Routes, TitleStrategy, withPreloading} from '@angular/router';
+import {
+  ActivatedRouteSnapshot, createUrlTreeFromSnapshot,
+  NoPreloading,
+  provideRouter,
+  Routes,
+  TitleStrategy,
+  withPreloading
+} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {TemplatePageTitleStrategy} from './app/template-page.title-strategy';
 import {CanActivateTestService} from './app/can-activate-test.service';
@@ -31,6 +38,12 @@ const routes: Routes = [
     loadComponent: () => import('./app/image.component').then(c => c.ImageComponent),
     title: 'Image',
     canActivate: [() => inject(CanActivateTestService).canActivateObs()]
+  },
+  {
+    path: 'still-image',
+    title: 'Image',
+    loadComponent: () => import('./app/not-found.component').then(c => c.NotFoundComponent),
+    canActivate: [(route: ActivatedRouteSnapshot) => createUrlTreeFromSnapshot(route, ['../image'])]
   },
   {
     path: 'switcher',

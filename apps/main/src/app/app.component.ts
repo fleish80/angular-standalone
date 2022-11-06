@@ -13,6 +13,7 @@ import {MatButtonModule} from '@angular/material/button';
     <nav class="nav">
       <a routerLink="/user" mat-button>User</a>
       <a routerLink="/image" mat-button>Image</a>
+      <a routerLink="/still-image" mat-button>Still Image</a>
       <a routerLink="/switcher" mat-button>Switcher</a>
     </nav>
 
