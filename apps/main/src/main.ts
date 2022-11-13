@@ -62,9 +62,6 @@ if (environment.production) {
   enableProdMode();
 }
 
-// bootstrapApplication(AppComponent, {providers: [importProvidersFrom(RouterModule.forRoot(routes))]})
-//   .catch((err) => console.error(err));
-
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(HttpClientModule),
