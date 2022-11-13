@@ -51,6 +51,11 @@ const routes: Routes = [
     loadChildren: () => import('./app/switcher.router').then(r => r.switcherRouter),
   },
   {
+    path: 'metadata',
+    loadComponent: () => import('./app/metadata.component').then(c => c.MetadataComponent),
+    title: 'Switcher',
+  },
+  {
     path: '**',
     loadComponent: () => import('./app/not-found.component').then(c => c.NotFoundComponent),
     title: 'No Found'

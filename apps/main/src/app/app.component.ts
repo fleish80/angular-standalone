@@ -15,6 +15,7 @@ import {MatButtonModule} from '@angular/material/button';
       <a routerLink="/image" mat-button>Image</a>
       <a routerLink="/still-image" mat-button>Still Image</a>
       <a routerLink="/switcher" mat-button>Switcher</a>
+      <a routerLink="/metadata" mat-button>Metadata</a>
     </nav>
 
     <main class="mat-app-background mat-elevation-z2 content">
