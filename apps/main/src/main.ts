@@ -1,9 +1,10 @@
-import {enableProdMode, ENVIRONMENT_INITIALIZER, importProvidersFrom, inject} from '@angular/core';
+import {enableProdMode, importProvidersFrom, inject} from '@angular/core';
 import {environment} from './environments/environment';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {AppComponent} from './app/app.component';
 import {
-  ActivatedRouteSnapshot, createUrlTreeFromSnapshot,
+  ActivatedRouteSnapshot,
+  createUrlTreeFromSnapshot,
   NoPreloading,
   provideRouter,
   Routes,
@@ -13,8 +14,6 @@ import {
 import {HttpClientModule} from '@angular/common/http';
 import {TemplatePageTitleStrategy} from './app/template-page.title-strategy';
 import {CanActivateTestService} from './app/can-activate-test.service';
-import {switcherRouter} from './app/switcher.router';
-import {SwitcherService} from './app/switcher.service';
 
 const routes: Routes = [
   {
@@ -49,16 +48,7 @@ const routes: Routes = [
     path: 'switcher',
     loadComponent: () => import('./app/switcher.component').then(c => c.SwitcherComponent),
     title: 'Switcher',
-    children: switcherRouter,
-    providers: [
-      {
-        provide: ENVIRONMENT_INITIALIZER,
-        multi: true,
-        useValue() {
-          inject(SwitcherService).init();
-        },
-      },
-    ],
+    loadChildren: () => import('./app/switcher.router').then(r => r.switcherRouter),
   },
   {
     path: '**',
