@@ -1,4 +1,11 @@
-import {ApplicationRef, createComponent, EnvironmentInjector, Injectable, Injector} from '@angular/core';
+import {
+  ApplicationRef,
+  createComponent,
+  createEnvironmentInjector,
+  EnvironmentInjector,
+  Injectable,
+  Injector
+} from '@angular/core';
 import {ToastComponent} from './toast.component';
 
 @Injectable({providedIn: 'root'})
@@ -20,8 +27,20 @@ export class ToastService {
       ],
     });
 
+    /**
+     * ModuleInjector(EnvironmentInjector) hierarchy  Configure a ModuleInjector in this hierarchy using an @NgModule() or @Injectable() annotation.
+     * ElementInjector hierarchy  Created implicitly at each DOM element. An ElementInjector is empty by default unless you configure it in the providers property on @Directive() or @Component().
+     */
+
+
+    const environmentInjector = createEnvironmentInjector(
+      [{
+        provide: 'MyToken',
+        useValue: 'Token'
+      }], this.injector);
+
     const dialogRef = createComponent(ToastComponent, {
-      environmentInjector: this.injector,
+      environmentInjector,
       elementInjector,
 
       /**
